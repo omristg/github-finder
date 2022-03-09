@@ -1,6 +1,9 @@
-import { useState } from "react"
+import { useContext, useState } from "react"
+import { GithubContext } from "../../context/github/GithubContext"
 
 export const UserSearch = () => {
+
+    const { users, searchUsers } = useContext(GithubContext)
 
     const [text, setText] = useState('')
 
@@ -12,7 +15,7 @@ export const UserSearch = () => {
         ev.preventDefault()
         if (!text) alert('Please enter something')
         else {
-            // TODO add the search val 
+            searchUsers(text)
             setText('')
         }
     }
@@ -38,9 +41,11 @@ export const UserSearch = () => {
                 </div>
             </form>
             <div>
-                <button className="btn btn-ghost btn-lg">
-                    Clear
-                </button>
+                {users.length > 0 && (
+                    <button className="btn btn-ghost btn-lg">
+                        Clear
+                    </button>
+                )}
             </div>
         </div>
     )

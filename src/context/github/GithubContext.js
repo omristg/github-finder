@@ -16,8 +16,10 @@ export const GithubProvier = ({ children }) => {
 
     const [state, dispatch] = useReducer(githubReducer, initialState)
 
-    const fetchUsers = async () => {
+    const searchUsers = async (searchVal) => {
 
+        const params = new URLSearchParams()
+        
         dispatch({ type: 'SET_LOADING' })
 
         const res = await fetch(`${BASE_URL}/users`, {
@@ -38,7 +40,7 @@ export const GithubProvier = ({ children }) => {
         <GithubContext.Provider value={{
             users: state.users,
             isLoading: state.isLoading,
-            fetchUsers,
+            searchUsers,
         }}>
             {children}
         </GithubContext.Provider>
