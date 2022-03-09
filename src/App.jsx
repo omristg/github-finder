@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
 
-import { Footer } from "./cmps/Footer"
-import { Navbar } from "./cmps/Navbar"
+import { Footer } from "./cmps/layout/Footer"
+import { Navbar } from "./cmps/layout/Navbar"
 import { Home } from "./pages/Home"
 import { NotFound } from "./pages/NotFound"
 import { About } from "./pages/About"
