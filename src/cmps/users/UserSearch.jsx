@@ -3,7 +3,7 @@ import { GithubContext } from "../../context/github/GithubContext"
 
 export const UserSearch = () => {
 
-    const { users, searchUsers } = useContext(GithubContext)
+    const { users, searchUsers, clearUsers } = useContext(GithubContext)
 
     const [text, setText] = useState('')
 
@@ -42,7 +42,8 @@ export const UserSearch = () => {
             </form>
             <div>
                 {users.length > 0 && (
-                    <button className="btn btn-ghost btn-lg">
+                    <button className="btn btn-ghost btn-lg"
+                        onClick={clearUsers} >
                         Clear
                     </button>
                 )}

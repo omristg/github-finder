@@ -7,7 +7,6 @@ export const GithubContext = createContext()
 
 const BASE_URL = process.env.REACT_APP_GITHUB_URL
 
-
 export const GithubProvier = ({ children }) => {
 
     const initialState = {
@@ -18,9 +17,8 @@ export const GithubProvier = ({ children }) => {
     const [state, dispatch] = useReducer(githubReducer, initialState)
 
     const searchUsers = async (searchVal) => {
-        const params = new URLSearchParams({
-            q: searchVal
-        })
+        const params = new URLSearchParams({ q: searchVal })
+
         dispatch({ type: 'SET_LOADING' })
 
         const res = await fetch(`${BASE_URL}/search/users?${params}`, {
@@ -29,19 +27,22 @@ export const GithubProvier = ({ children }) => {
             }
         })
         const { items } = await res.json()
-        console.log(items);
         dispatch({
             type: 'GET_USERS',
             users: items
         })
     }
 
+    const clearUsers = () => {
+        dispatch({ type: 'CLEAR_USERS' })
+    }
 
     return (
         <GithubContext.Provider value={{
             users: state.users,
             isLoading: state.isLoading,
             searchUsers,
+            clearUsers
         }}>
             {children}
         </GithubContext.Provider>
