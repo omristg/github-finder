@@ -10,7 +10,6 @@ const BASE_URL = process.env.REACT_APP_GITHUB_URL
 
 export const GithubProvier = ({ children }) => {
 
-
     const initialState = {
         users: [],
         isLoading: false
@@ -19,21 +18,21 @@ export const GithubProvier = ({ children }) => {
     const [state, dispatch] = useReducer(githubReducer, initialState)
 
     const searchUsers = async (searchVal) => {
-
-        // const params = new URLSearchParams()
-
+        const params = new URLSearchParams({
+            q: searchVal
+        })
         dispatch({ type: 'SET_LOADING' })
 
-        const res = await fetch(`${BASE_URL}/users`, {
+        const res = await fetch(`${BASE_URL}/search/users?${params}`, {
             headers: {
                 Authorization: `token ${API_KEY}`
             }
         })
-        const users = await res.json()
-
+        const { items } = await res.json()
+        console.log(items);
         dispatch({
             type: 'GET_USERS',
-            users
+            users: items
         })
     }
 
