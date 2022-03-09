@@ -1,30 +1,38 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
 import { GithubProvier } from "./context/github/GithubContext"
+import { AlertProvider } from "./context/alert/AlertContext"
 
 import { Footer } from "./cmps/layout/Footer"
 import { Navbar } from "./cmps/layout/Navbar"
 import { Home } from "./pages/Home"
 import { NotFound } from "./pages/NotFound"
 import { About } from "./pages/About"
+import { Alert } from "./cmps/layout/Alert"
 
 export const App = () => {
 	return (
 		<GithubProvier>
-
-			<Router>
-				<div className="flex flex-col justify-between h-screen">
-					<Navbar />
-					<main className="container mx-auto px-3 pb-12">
-						<Routes>
-							<Route path='/' element={<Home />} />
-							<Route path='/about' element={<About />} />
-							{/* <Route path='/notfound' element={<NotFound />} /> */}
-							<Route path='*' element={<NotFound />} />
-						</Routes>
-					</main>
-					<Footer />
-				</div>
-			</Router>
+			<AlertProvider>
+				<Router>
+					<div className="flex flex-col justify-between h-screen">
+						<Navbar />
+						<main className="container mx-auto px-3 pb-12">
+							<Routes>
+								<Route path='/' element={
+									<>
+										<Alert />
+										<Home />
+									</>
+								} />
+								<Route path='/about' element={<About />} />
+								{/* <Route path='/notfound' element={<NotFound />} /> */}
+								<Route path='*' element={<NotFound />} />
+							</Routes>
+						</main>
+						<Footer />
+					</div>
+				</Router>
+			</AlertProvider>
 		</GithubProvier>
 	)
 }
