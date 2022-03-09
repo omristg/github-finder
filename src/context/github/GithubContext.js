@@ -1,13 +1,15 @@
 import { createContext, useReducer } from "react";
 import { githubReducer } from "./GithubReducer";
 
+import { API_KEY } from "../../data";
+
 export const GithubContext = createContext()
 
 const BASE_URL = process.env.REACT_APP_GITHUB_URL
-// const API_KEY = process.env.REACT_APP_GITHUB_TOKEN
 
 
 export const GithubProvier = ({ children }) => {
+
 
     const initialState = {
         users: [],
@@ -18,13 +20,13 @@ export const GithubProvier = ({ children }) => {
 
     const searchUsers = async (searchVal) => {
 
-        const params = new URLSearchParams()
-        
+        // const params = new URLSearchParams()
+
         dispatch({ type: 'SET_LOADING' })
 
         const res = await fetch(`${BASE_URL}/users`, {
             headers: {
-                // Authorization: `token ${API_KEY}`
+                Authorization: `token ${API_KEY}`
             }
         })
         const users = await res.json()
