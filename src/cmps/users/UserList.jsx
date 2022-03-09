@@ -10,7 +10,7 @@ export const UserList = () => {
     const { users, isLoading, fetchUsers } = useContext(GithubContext)
 
     useEffect(() => {
-        fetchUsers()
+        // fetchUsers()
     }, [])
 
 

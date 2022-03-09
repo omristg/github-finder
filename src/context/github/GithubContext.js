@@ -11,12 +11,15 @@ export const GithubProvier = ({ children }) => {
 
     const initialState = {
         users: [],
-        isLoading: true
+        isLoading: false
     }
 
     const [state, dispatch] = useReducer(githubReducer, initialState)
 
     const fetchUsers = async () => {
+
+        dispatch({ type: 'SET_LOADING' })
+
         const res = await fetch(`${BASE_URL}/users`, {
             headers: {
                 // Authorization: `token ${API_KEY}`
@@ -29,6 +32,8 @@ export const GithubProvier = ({ children }) => {
             users
         })
     }
+
+
     return (
         <GithubContext.Provider value={{
             users: state.users,
