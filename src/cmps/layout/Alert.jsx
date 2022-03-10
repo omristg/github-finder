@@ -1,13 +1,9 @@
 import { alertContext } from "../../context/alert/AlertContext"
-import { useContext, useEffect } from "react"
+import { useContext } from "react"
 
 export const Alert = () => {
 
     const { alert } = useContext(alertContext)
-
-    useEffect(() => {
-        console.log(alert);
-    }, [alert])
 
     return (
         <div

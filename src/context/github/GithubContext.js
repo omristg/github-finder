@@ -11,6 +11,7 @@ export const GithubProvier = ({ children }) => {
 
     const initialState = {
         users: [],
+        user: {},
         isLoading: false
     }
 
@@ -18,7 +19,6 @@ export const GithubProvier = ({ children }) => {
 
     const searchUsers = async (searchVal) => {
         const params = new URLSearchParams({ q: searchVal })
-
         dispatch({ type: 'SET_LOADING' })
 
         const res = await fetch(`${BASE_URL}/search/users?${params}`, {
@@ -33,6 +33,23 @@ export const GithubProvier = ({ children }) => {
         })
     }
 
+    const getUser = async (login) => {
+        dispatch({ type: 'SET_LOADING' })
+        const res = await fetch(`${BASE_URL}/users/${login}`, {
+            headers: {
+                Authorization: `token ${API_KEY}`
+            }
+        })
+        if (res.status === 404) window.location = '/notfound'
+        else {
+            const user = await res.json()
+            dispatch({
+                type: 'GET_USER',
+                user
+            })
+        }
+    }
+
     const clearUsers = () => {
         dispatch({ type: 'CLEAR_USERS' })
     }
@@ -40,9 +57,11 @@ export const GithubProvier = ({ children }) => {
     return (
         <GithubContext.Provider value={{
             users: state.users,
+            user: state.user,
             isLoading: state.isLoading,
             searchUsers,
-            clearUsers
+            getUser,
+            clearUsers,
         }}>
             {children}
         </GithubContext.Provider>
