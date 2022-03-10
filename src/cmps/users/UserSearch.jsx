@@ -5,7 +5,7 @@ import { searchUsers } from '../../context/github/GithubAction'
 
 export const UserSearch = () => {
 
-    const { users, dispatch } = useContext(GithubContext)
+    const { users, dispatch ,isLoading} = useContext(GithubContext)
     const { setAlert } = useContext(alertContext)
 
     const [text, setText] = useState('')
@@ -25,6 +25,8 @@ export const UserSearch = () => {
         }
     }
 
+    if (isLoading) return <></>
+    
     return (
         <div className="grid grid-cols-1 md:grid-cols-2
         lg:grid-cols-3 xl:grid-cols-4 gap-8 mb-8">

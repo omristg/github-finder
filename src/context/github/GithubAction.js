@@ -1,7 +1,7 @@
 
 import axios from 'axios'
-
 import { API_KEY } from "../../data";
+
 const BASE_URL = process.env.REACT_APP_GITHUB_URL
 
 const github = new axios.create({
@@ -14,8 +14,8 @@ const github = new axios.create({
 
 export const searchUsers = async (searchVal) => {
     const params = new URLSearchParams({ q: searchVal })
-    const { data } = github.get(`/users/${params}`)
-    return data
+    const { data } = await github.get(`/search/users?${params}`)
+    return data.items
 }
 
 const getRepos = (login) => {
