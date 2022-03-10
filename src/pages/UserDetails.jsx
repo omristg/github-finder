@@ -2,7 +2,7 @@ import { FaCodepen, FaStore, FaUsers, FaUserFriends } from 'react-icons/fa'
 import { useParams, Link } from "react-router-dom"
 import { useContext, useEffect } from "react"
 import { GithubContext } from "../context/github/GithubContext"
-import { getUser, getUserRepos } from '../context/github/GithubAction'
+import { getUser, getUserRepos, getUserAndRepos } from '../context/github/GithubAction'
 
 import { Spinner } from "../cmps/layout/Spinner"
 import { RepoList } from '../cmps/repos/RepoList'
@@ -17,10 +17,8 @@ export const UserDetails = () => {
     useEffect(() => {
         dispatch({ type: 'SET_LOADING' });
         (async () => {
-            const user = await getUser(login)
+            const { user, repos } = await getUserAndRepos(login)
             dispatch({ type: 'GET_USER', user })
-
-            const repos = await getUserRepos(login)
             dispatch({ type: 'GET_REPOS', repos })
         })();
     }, [login, dispatch])
