@@ -4,16 +4,18 @@ import { useContext, useEffect } from "react"
 import { GithubContext } from "../context/github/GithubContext"
 
 import { Spinner } from "../cmps/layout/Spinner"
+import { RepoList } from '../cmps/repos/RepoList'
 
 
 export const UserDetails = () => {
 
-    const { user, getUser, isLoading } = useContext(GithubContext)
+    const { user, getUser, getUserRepos, isLoading, repos } = useContext(GithubContext)
 
     const { login } = useParams()
 
     useEffect(() => {
         getUser(login)
+        getUserRepos(login)
     }, [])
 
     if (isLoading) return <Spinner />
@@ -91,7 +93,7 @@ export const UserDetails = () => {
                             {blog && (
                                 <div className="stat">
                                     <div className="stat-value text-md">Website</div>
-                                    <a href={`http://${blog}`}
+                                    <a href={`https://${blog}`}
                                         target="_blank"
                                         rel="noreferrer"
                                     >{blog}</a>
@@ -100,7 +102,7 @@ export const UserDetails = () => {
                             {twitter_username && (
                                 <div className="stat">
                                     <div className="stat-value text-md">Twitter</div>
-                                    <a href={`http://twitter.com/${twitter_username}`}
+                                    <a href={`https://twitter.com/${twitter_username}`}
                                         target="_blank"
                                         rel="noreferrer"
                                     >{blog}</a>
@@ -162,6 +164,7 @@ export const UserDetails = () => {
                     </div>
 
                 </div>
+                <RepoList repos={repos} />
             </div>
         </>
     )

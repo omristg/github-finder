@@ -12,6 +12,7 @@ export const GithubProvier = ({ children }) => {
     const initialState = {
         users: [],
         user: {},
+        repos: [],
         isLoading: false
     }
 
@@ -44,10 +45,27 @@ export const GithubProvier = ({ children }) => {
         else {
             const user = await res.json()
             dispatch({
-                type: 'GET_USER',
-                user
+                type: 'GET_USER', user
             })
         }
+    }
+
+    const getUserRepos = async (login) => {
+        const params = new URLSearchParams({
+            sort: 'created',
+            per_page: 10
+        })
+
+        dispatch({ type: 'SET_LOADING' })
+        const res = await fetch(`${BASE_URL}/users/${login}/repos?${params}`, {
+            headers: {
+                Authorization: `token ${API_KEY}`
+            }
+        })
+        const repos = await res.json()
+        dispatch({
+            type: 'GET_REPOS', repos
+        })
     }
 
     const clearUsers = () => {
@@ -58,9 +76,11 @@ export const GithubProvier = ({ children }) => {
         <GithubContext.Provider value={{
             users: state.users,
             user: state.user,
+            repos: state.repos,
             isLoading: state.isLoading,
             searchUsers,
             getUser,
+            getUserRepos,
             clearUsers,
         }}>
             {children}
