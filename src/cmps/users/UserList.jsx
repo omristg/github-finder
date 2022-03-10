@@ -7,13 +7,7 @@ import { UserPreview } from './UserPreview'
 
 export const UserList = () => {
 
-    const { users, isLoading, fetchUsers } = useContext(GithubContext)
-
-    useEffect(() => {
-        // fetchUsers()
-    }, [])
-
-
+    const { users, isLoading } = useContext(GithubContext)
 
     if (isLoading) return <Spinner />
 

@@ -2,6 +2,7 @@ import { FaCodepen, FaStore, FaUsers, FaUserFriends } from 'react-icons/fa'
 import { useParams, Link } from "react-router-dom"
 import { useContext, useEffect } from "react"
 import { GithubContext } from "../context/github/GithubContext"
+import { getUser, getUserRepos } from '../context/github/GithubAction'
 
 import { Spinner } from "../cmps/layout/Spinner"
 import { RepoList } from '../cmps/repos/RepoList'
@@ -9,14 +10,20 @@ import { RepoList } from '../cmps/repos/RepoList'
 
 export const UserDetails = () => {
 
-    const { user, getUser, getUserRepos, isLoading, repos } = useContext(GithubContext)
+    const { user, isLoading, repos, dispatch } = useContext(GithubContext)
 
     const { login } = useParams()
 
     useEffect(() => {
-        getUser(login)
-        getUserRepos(login)
-    }, [])
+        dispatch({ type: 'SET_LOADING' });
+        (async () => {
+            const user = await getUser(login)
+            dispatch({ type: 'GET_USER', user })
+
+            const repos = await getUserRepos(login)
+            dispatch({ type: 'GET_REPOS', repos })
+        })();
+    }, [login, dispatch])
 
     if (isLoading) return <Spinner />
 
