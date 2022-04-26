@@ -1,7 +1,7 @@
 
 import axios from 'axios'
-import { API_KEY } from "../../data";
 
+const API_KEY = process.env.REACT_APP_GITHUB_TOKEN
 const BASE_URL = process.env.REACT_APP_GITHUB_URL
 
 const github = new axios.create({
