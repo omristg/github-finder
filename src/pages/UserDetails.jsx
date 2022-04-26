@@ -102,7 +102,7 @@ export const UserDetails = () => {
                                     <a href={`https://${blog}`}
                                         target="_blank"
                                         rel="noreferrer"
-                                        className='stat-value text-lg'
+                                        className='stat-value text-lg truncate'
                                     >{blog}</a>
                                 </div>
                             )}
